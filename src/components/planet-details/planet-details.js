@@ -7,7 +7,8 @@ export default class PlanetDetails extends Component {
     return (
       <div className="planet-details card">
         <img className="planet-image"
-             src="https://starwars-visualguide.com/assets/img/planets/2.jpg" />
+             src="https://starwars-visualguide.com/assets/img/planets/2.jpg"
+             alt="planet image" />
 
         <div className="card-body">
           <h4>Alderaan</h4>

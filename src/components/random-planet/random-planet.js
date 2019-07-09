@@ -62,9 +62,6 @@ export default class RandomPlanet extends Component {
       </div>
     );
   };
-
-
-
 }
 
 const PlanetView = ({planet}) => {
@@ -72,7 +69,8 @@ const PlanetView = ({planet}) => {
   return (
     <React.Fragment>
       <img className="planet-image"
-           src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`} alt="planet icon"/>
+           src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+           alt="planet icon"/>
       <div>
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
