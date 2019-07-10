@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ItemList from '../item-list';
-import PlanetDetails from '../planet-details';
-
 import './app.css';
+import ErrorButton from "../error-button";
+import ErrorIndicator from "../error-indicator";
+import PlanetPage from "../planet-page";
 
-export default class App extends Component{
+export default class App extends Component {
   state = {
     showRandomPlanet: true,
-    selectedPlanet: null
+    hasError: false
   };
 
   toggleRandomPlanet = () => {
@@ -21,29 +21,28 @@ export default class App extends Component{
     });
   };
 
-  onPlanetSelected = (id) => {
-    this.setState({selectedPlanet: id});
-  };
+  componentDidCatch() {
+    console.log('Cauth');
+    this.setState({hasError: true});
+  }
 
   render() {
-    const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
+    if (this.state.hasError) {
+      return <ErrorIndicator/>
+    }
+    const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
     return (
       <div>
-        <Header />
+        <Header/>
         {randomPlanet}
         <button className="toggle-planet btn btn-warning btn-lg"
-        onClick={this.toggleRandomPlanet}>
+                onClick={this.toggleRandomPlanet}>
           Show random planet
         </button>
-
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected={this.onPlanetSelected} />
-          </div>
-          <div className="col-md-6">
-            <PlanetDetails planetId={this.state.selectedPlanet} />
-          </div>
-        </div>
+        <ErrorButton/>
+        <PlanetPage />
+        <PlanetPage />
+        <PlanetPage />
       </div>
     );
   };

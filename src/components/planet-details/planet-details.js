@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './planet-details.css';
 import SwapiService from "../../services/swapi-service";
+import ErrorButton from "../error-button";
 
 export default class PlanetDetails extends Component {
   swapiService = new SwapiService();
@@ -55,6 +56,9 @@ export default class PlanetDetails extends Component {
             <li className="list-group-item">
               <span className="term">Population</span>
               <span>{population}</span>
+            </li>
+            <li className="list-group-item">
+              <ErrorButton />
             </li>
           </ul>
         </div>
