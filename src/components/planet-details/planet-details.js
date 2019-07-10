@@ -7,7 +7,7 @@ export default class PlanetDetails extends Component {
   swapiService = new SwapiService();
 
   state = {
-    planet: null
+    item: null
   };
 
   updatePlanet() {
@@ -16,8 +16,8 @@ export default class PlanetDetails extends Component {
       return;
     }
     this.swapiService.getPlanet(planetId)
-      .then((planet) => {
-        this.setState({planet});
+      .then((item) => {
+        this.setState({item});
       });
   }
 
@@ -32,10 +32,10 @@ export default class PlanetDetails extends Component {
   }
 
   render() {
-    if (!this.state.planet) {
+    if (!this.state.item) {
       return (<span>Select a planet from the list</span>);
     }
-    const {id, name, diameter, gravity, population} = this.state.planet;
+    const {id, name, diameter, gravity, population} = this.state.item;
 
     return (
       <div className="planet-details card">

@@ -6,8 +6,11 @@ import './app.css';
 import ErrorButton from "../error-button";
 import ErrorIndicator from "../error-indicator";
 import PlanetPage from "../planet-page";
+import SwapiService from "../../services/swapi-service";
 
 export default class App extends Component {
+  swapiService = new SwapiService();
+
   state = {
     showRandomPlanet: true,
     hasError: false
@@ -40,9 +43,12 @@ export default class App extends Component {
           Show random planet
         </button>
         <ErrorButton/>
-        <PlanetPage />
-        <PlanetPage />
-        <PlanetPage />
+        <PlanetPage getData={this.swapiService.getAllPlanets}
+                    renderItem={({name, population}) => `${name} { population: ${population} }`}/>
+        <PlanetPage getData={this.swapiService.getPeople}
+                    renderItem={({name, gender}) => `${name} - { ${gender} }`}/>
+        <PlanetPage getData={this.swapiService.getAllSpaceships}
+                    renderItem={({name, model}) => `${name} - { ${model} }`}/>
       </div>
     );
   };

@@ -25,7 +25,7 @@ export default class RandomPlanet extends Component {
 
   onPlanetLoaded = (planet) => {
     this.setState({
-      planet,
+      planet: planet,
       loading: false
     });
   };
