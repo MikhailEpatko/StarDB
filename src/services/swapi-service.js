@@ -1,9 +1,9 @@
 export default class SwapiService {
 
-  _apiBase = 'https://cors-anywhere.herokuapp.com/https://swapi.co/api';
+  _apiBase = 'https://swapi.co/api';
 
   async getResource(path) {
-    const res = await fetch(`${this._apiBase}${path}`);
+    const res = await fetch( `${this._apiBase}${path}` );
     if (!res.ok) {
       throw new Error(`Could not fetch ${path}, recieved ${res.status}.`);
     }
@@ -22,7 +22,7 @@ export default class SwapiService {
 
   async getPeople() {
     const res = await this.getResource(`/people`);
-    return res.result.map(this._transformPerson);
+    return res.results.map(this._transformPerson);
   }
 
   async getPerson(id) {
@@ -32,7 +32,7 @@ export default class SwapiService {
 
   async getAllSpaceships() {
     const res = await this.getResource(`/starships`);
-    return res.result.map(this._transformSpaceship);
+    return res.results.map(this._transformSpaceship);
   }
 
   async getSpaceship(id) {
@@ -45,7 +45,7 @@ export default class SwapiService {
     return item.url.match(idRegExp)[1];
   }
 
-  _transformPlanet(planet) {
+  _transformPlanet = (planet) => {
     return {
       id: this._extractId(planet),
       name: planet.name,
@@ -53,9 +53,9 @@ export default class SwapiService {
       gravity: planet.gravity,
       population: planet.population
     };
-  }
+  };
 
-  _transformSpaceship(spaceship) {
+  _transformSpaceship = (spaceship) => {
     return {
       id: this._extractId(spaceship),
       name: spaceship.name,
@@ -68,9 +68,9 @@ export default class SwapiService {
       cargoCapacity: spaceship.cargoCapacity
 
     };
-  }
+  };
 
-  _transformPerson(person) {
+  _transformPerson = (person) => {
     return {
       id: this._extractId(person),
       name: person.name,
@@ -78,6 +78,5 @@ export default class SwapiService {
       birthYear: person.birthYear,
       eyeColor: person.eyeColor
     };
-  }
-
+  };
 }
