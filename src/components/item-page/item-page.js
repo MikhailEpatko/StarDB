@@ -36,7 +36,6 @@ export default class ItemPage extends Component {
 
     return (
       <Row left={itemList} right={itemDetails}/>
-
     );
   }
 }
