@@ -5,8 +5,9 @@ import RandomPlanet from '../random-planet';
 import './app.css';
 import ErrorButton from "../error-button";
 import ErrorIndicator from "../error-indicator";
-import PlanetPage from "../planet-page";
+import ItemPage from "../item-page";
 import SwapiService from "../../services/swapi-service";
+import Record from '../record';
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -34,6 +35,9 @@ export default class App extends Component {
       return <ErrorIndicator/>
     }
     const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
+    const {getAllPlanets, getPlanet, getPlanetImage,
+           getPeople, getPerson, getPersonImage,
+           getAllSpaceships, getSpaceship, getSpaceshipImage} = this.swapiService;
     return (
       <div>
         <Header/>
@@ -43,12 +47,30 @@ export default class App extends Component {
           Show random planet
         </button>
         <ErrorButton/>
-        <PlanetPage getData={this.swapiService.getAllPlanets}
-                    renderItem={({name, population}) => `${name} { population: ${population} }`}/>
-        <PlanetPage getData={this.swapiService.getPeople}
-                    renderItem={({name, gender}) => `${name} - { ${gender} }`}/>
-        <PlanetPage getData={this.swapiService.getAllSpaceships}
-                    renderItem={({name, model}) => `${name} - { ${model} }`}/>
+        <ItemPage getData={getAllPlanets}
+                  getItemData={getPlanet}
+                  getImageUrl={getPlanetImage}
+                  renderItem={({name, population}) => `${name} { population: ${population} }`} >
+          <Record field="diameter" label="Diameter" />
+          <Record field="gravity" label="Gravity" />
+          <Record field="population" label="Population" />
+        </ItemPage>
+        <ItemPage getData={getPeople}
+                  getItemData={getPerson}
+                  getImageUrl={getPersonImage}
+                  renderItem={({name, gender}) => `${name} - { ${gender} }`} >
+          <Record field="gender" label="Gender" />
+          <Record field="eyeColor" label="Eye Color" />
+          <Record field="birthYear" label="Birth Year" />
+        </ItemPage>
+        <ItemPage getData={getAllSpaceships}
+                  getItemData={getSpaceship}
+                  getImageUrl={getSpaceshipImage}
+                  renderItem={({name, model}) => `${name} - { ${model} }`} >
+          <Record field="model" label="Model" />
+          <Record field="manufactured" label="Manufactured" />
+          <Record field="passengers" label="Passengers" />
+        </ItemPage>
       </div>
     );
   };

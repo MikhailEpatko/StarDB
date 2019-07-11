@@ -1,21 +1,21 @@
 
-.planet-details {
+.item-details {
     display: flex;
     margin-top: 1rem;
     flex-direction: row;
     padding: 1rem;
 }
 
-.planet-details .planet-image {
+.item-details .planet-image {
     width: 30%;
     height: 30%;
     border-radius: 10px;
 }
 
-.planet-details .list-group-item {
+.item-details .list-group-item {
     padding: .25rem;
 }
 
-.planet-details .list-group-item .term{
+.item-details .list-group-item .term{
     margin-right: .5rem;
 }
