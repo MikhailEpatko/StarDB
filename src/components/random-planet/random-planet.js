@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import './random-planet.css';
-import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator';
 
 export default class RandomPlanet extends Component {
-
-  swapiService = new SwapiService();
 
   state = {
     planet: {},
@@ -14,9 +11,16 @@ export default class RandomPlanet extends Component {
     error: false
   };
 
+
   componentDidMount() {
     this.updatePlanet();
     this.interval = setInterval(this.updatePlanet, 5000);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.swapiService !== this.props.swapiService) {
+      this.updatePlanet();
+    }
   }
 
   componentWillUnmount() {
@@ -39,7 +43,7 @@ export default class RandomPlanet extends Component {
 
   updatePlanet = () => {
     const id = Math.floor(Math.random() * 15) + 3;
-    this.swapiService
+    this.props.swapiService
       .getPlanet(id)
       .then(this.onPlanetLoaded)
       .catch(this.onError);

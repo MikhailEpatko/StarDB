@@ -4,17 +4,18 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import './app.css';
 import ErrorButton from "../error-button";
-import ItemPage from "../item-page";
+import ItemPage from "../pages";
 import {SwapiServiceProvider} from "../swapi-service-context/swapi-service-context";
 import SwapiService from "../../services/swapi-service";
+import DummySwapiService from "../../services/dummy-swapi-service";
 import Record from '../record';
 import ErrorBoundry from "../error-boundry";
 
 export default class App extends Component {
-  swapiService = new SwapiService();
 
   state = {
-    showRandomPlanet: true
+    showRandomPlanet: true,
+    swapiService: new SwapiService()
   };
 
   toggleRandomPlanet = () => {
@@ -25,30 +26,33 @@ export default class App extends Component {
     });
   };
 
-  componentDidCatch() {
-    console.log('Cauth');
-    this.setState({hasError: true});
-  }
+  onServiceChange = () => {
+    this.setState((state) => {
+      const Service = state.swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+      return {
+        swapiService: new Service()
+      };
+    });
+  };
 
   render() {
-    const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
+    const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet swapiService={this.state.swapiService}/> : null;
     const {
       getAllPlanets, getPlanet, getPlanetImage,
       getPeople, getPerson, getPersonImage,
       getAllSpaceships, getSpaceship, getSpaceshipImage
-    } = this.swapiService;
+    } = this.state.swapiService;
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div>
-            <Header/>
+            <Header onServiceChange={this.onServiceChange}/>
             {randomPlanet}
             <button className="toggle-planet btn btn-warning btn-lg"
                     onClick={this.toggleRandomPlanet}>
               Show random planet
             </button>
             <ErrorButton/>
-
             <ItemPage getData={getAllPlanets}
                       getItemData={getPlanet}
                       getImageUrl={getPlanetImage}

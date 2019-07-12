@@ -27,9 +27,14 @@ export default class ItemDetails extends Component {
     this.updateItem();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (this.props.itemId !== prevProps.itemId) {
       this.updateItem();
+    }
+    if (this.props.getItemData !== prevProps.getItemData) {
+      this.setState({
+        item: null
+      });
     }
   }
 

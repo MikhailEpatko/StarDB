@@ -25,3 +25,8 @@
 .header h3 a:hover {
     color: #00bc8c;
 }
+
+.btn.change-service {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}

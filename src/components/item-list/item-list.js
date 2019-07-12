@@ -9,12 +9,22 @@ export default class ItemList extends Component {
   };
 
   componentDidMount() {
+    this.updateList();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.getData !== prevProps.getData) {
+      this.updateList();
+    }
+  }
+
+  updateList = () => {
     const {getData} = this.props;
     getData()
       .then((itemList) => {
         this.setState({itemList})
       });
-  }
+  };
 
   renderItems(arr) {
     return arr.map((item) => {
@@ -28,6 +38,8 @@ export default class ItemList extends Component {
       );
     });
   }
+
+
 
   render() {
     const {itemList} = this.state;
