@@ -21,10 +21,10 @@ export default class App extends Component {
   };
 
   toggleRandomPlanet = () => {
-    this.setState(({randomPlanetButtonLabel, showRandomPlanet}) => {
+    this.setState(({showRandomPlanet}) => {
       return {
-        showRandomPlanet: !showRandomPlanet,
-        randomPlanetButtonLabel: randomPlanetButtonLabel === 'Hide random planet' ? 'Show random planet' : 'Hide random planet'
+        randomPlanetButtonLabel: showRandomPlanet ? 'Show random planet' : 'Hide random planet',
+        showRandomPlanet: !showRandomPlanet
       }
     });
   };
@@ -97,8 +97,20 @@ export default class App extends Component {
               </button>
               <ErrorButton/>
 
+              <Route path="/"
+                     render={() => <h2>Welcome to StarDB!</h2>}
+                     exact/>
+              <Route path="/planets"
+                     render={() => <h2>Planets</h2>}
+                     exact/>
               <Route path="/planets" component={PlanetsPage}/>
+              <Route path="/people"
+                     render={() => <h2>People</h2>}
+                     exact/>
               <Route path="/people" component={PeoplePage}/>
+              <Route path="/spaceships"
+                     render={() => <h2>Spaceships</h2>}
+                     exact/>
               <Route path="/spaceships" component={SpaceshipPage}/>
 
             </div>

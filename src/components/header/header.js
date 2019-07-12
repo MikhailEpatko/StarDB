@@ -7,9 +7,9 @@ const Header = ({onServiceChange}) => {
   return (
     <div className="header d-flex">
       <h3>
-        <a href="#">
+        <Link to="/">
           StarDB
-        </a>
+        </Link>
       </h3>
       <ul className="d-flex">
         <li>
@@ -19,7 +19,7 @@ const Header = ({onServiceChange}) => {
           <Link to="/planets">Planets</Link>
         </li>
         <li>
-          <Link to="/spaceships">Starships</Link>
+          <Link to="/spaceships">Spaceships</Link>
         </li>
       </ul>
       <button className="btn btn-primary btn-sm change-service"
