@@ -14,7 +14,7 @@ export default class RandomPlanet extends Component {
 
   componentDidMount() {
     this.updatePlanet();
-    this.interval = setInterval(this.updatePlanet, 5000);
+    this.interval = setInterval(this.updatePlanet, this.props.updateInterval);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -95,4 +95,8 @@ const PlanetView = ({planet}) => {
       </div>
     </React.Fragment>
   );
+};
+
+RandomPlanet.defaultProps = {
+  updateInterval: 5000
 };

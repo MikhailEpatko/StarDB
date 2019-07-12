@@ -18,7 +18,7 @@ export default class ItemList extends Component {
     }
   }
 
-  updateList = () => {
+   updateList = () => {
     const {getData} = this.props;
     getData()
       .then((itemList) => {
@@ -54,3 +54,8 @@ export default class ItemList extends Component {
     );
   };
 }
+
+ItemList.defaultProps = {
+  getData: () => {},
+  renderItem: () => {}
+};
