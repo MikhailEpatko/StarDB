@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import './item-list.css';
 import Spinner from "../spinner";
 
@@ -39,8 +41,6 @@ export default class ItemList extends Component {
     });
   }
 
-
-
   render() {
     const {itemList} = this.state;
     if (!itemList) {
@@ -58,4 +58,9 @@ export default class ItemList extends Component {
 ItemList.defaultProps = {
   getData: () => {},
   renderItem: () => {}
+};
+
+ItemList.propTypes = {
+  getData: PropTypes.func,
+  renderItem: PropTypes.func
 };

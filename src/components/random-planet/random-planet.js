@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types;'
+
 import './random-planet.css';
 import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator';
@@ -101,12 +103,16 @@ RandomPlanet.defaultProps = {
   updateInterval: 5000
 };
 
+// RandomPlanet.propTypes = {
+//   updateInterval: (props, propName, componentName) => {
+//     const value = props[propName];
+//     if (typeof value === 'number' && !isNaN(value)) {
+//       return null;
+//     }
+//     return new TypeError(`${componentName}: ${propName} has be a number!`)
+//   }
+// };
+
 RandomPlanet.propTypes = {
-  updateInterval: (props, propName, componentName) => {
-    const value = props[propName];
-    if (typeof value === 'number' && !isNaN(value)) {
-      return null;
-    }
-    return new TypeError(`${componentName}: ${propName} has be a number!`)
-  }
+  updateInterval: PropTypes.number
 };
