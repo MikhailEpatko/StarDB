@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types;'
+import PropTypes from 'prop-types';
 
 import './random-planet.css';
 import Spinner from '../spinner'
@@ -103,6 +103,10 @@ RandomPlanet.defaultProps = {
   updateInterval: 5000
 };
 
+RandomPlanet.propTypes = {
+  updateInterval: PropTypes.number
+};
+
 // RandomPlanet.propTypes = {
 //   updateInterval: (props, propName, componentName) => {
 //     const value = props[propName];
@@ -112,7 +116,3 @@ RandomPlanet.defaultProps = {
 //     return new TypeError(`${componentName}: ${propName} has be a number!`)
 //   }
 // };
-
-RandomPlanet.propTypes = {
-  updateInterval: PropTypes.number
-};

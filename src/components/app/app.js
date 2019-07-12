@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -15,13 +16,15 @@ export default class App extends Component {
 
   state = {
     showRandomPlanet: true,
-    swapiService: new SwapiService()
+    swapiService: new SwapiService(),
+    randomPlanetButtonLabel: 'Hide random planet'
   };
 
   toggleRandomPlanet = () => {
-    this.setState((state) => {
+    this.setState(({randomPlanetButtonLabel, showRandomPlanet}) => {
       return {
-        showRandomPlanet: !state.showRandomPlanet
+        showRandomPlanet: !showRandomPlanet,
+        randomPlanetButtonLabel: randomPlanetButtonLabel === 'Hide random planet' ? 'Show random planet' : 'Hide random planet'
       }
     });
   };
@@ -36,50 +39,70 @@ export default class App extends Component {
   };
 
   render() {
-    const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet swapiService={this.state.swapiService}/> : null;
     const {
       getAllPlanets, getPlanet, getPlanetImage,
       getPeople, getPerson, getPersonImage,
       getAllSpaceships, getSpaceship, getSpaceshipImage
     } = this.state.swapiService;
+
+    const randomPlanet = this.state.showRandomPlanet ? <RandomPlanet swapiService={this.state.swapiService}/> : null;
+
+    const PlanetsPage = () => {
+      return (
+        <ItemPage getData={getAllPlanets}
+                  getItemData={getPlanet}
+                  getImageUrl={getPlanetImage}
+                  renderItem={({name, population}) => `${name} { population: ${population} }`}>
+          <Record field="diameter" label="Diameter"/>
+          <Record field="gravity" label="Gravity"/>
+          <Record field="population" label="Population"/>
+        </ItemPage>
+      );
+    };
+
+    const PeoplePage = () => {
+      return (
+        <ItemPage getData={getPeople}
+                  getItemData={getPerson}
+                  getImageUrl={getPersonImage}
+                  renderItem={({name, gender}) => `${name} - { ${gender} }`}>
+          <Record field="gender" label="Gender"/>
+          <Record field="eyeColor" label="Eye Color"/>
+          <Record field="birthYear" label="Birth Year"/>
+        </ItemPage>);
+    };
+
+    const SpaceshipPage = () => {
+      return (
+        <ItemPage getData={getAllSpaceships}
+                  getItemData={getSpaceship}
+                  getImageUrl={getSpaceshipImage}
+                  renderItem={({name, model}) => `${name} - { ${model} }`}>
+          <Record field="model" label="Model"/>
+          <Record field="manufactured" label="Manufactured"/>
+          <Record field="passengers" label="Passengers"/>
+        </ItemPage>);
+    };
+
     return (
       <ErrorBoundry>
         <SwapiServiceProvider value={this.state.swapiService}>
-          <div>
-            <Header onServiceChange={this.onServiceChange}/>
-            {randomPlanet}
-            <button className="toggle-planet btn btn-warning btn-lg"
-                    onClick={this.toggleRandomPlanet}>
-              Show random planet
-            </button>
-            <ErrorButton/>
-            <ItemPage getData={getAllPlanets}
-                      getItemData={getPlanet}
-                      getImageUrl={getPlanetImage}
-                      renderItem={({name, population}) => `${name} { population: ${population} }`}>
-              <Record field="diameter" label="Diameter"/>
-              <Record field="gravity" label="Gravity"/>
-              <Record field="population" label="Population"/>
-            </ItemPage>
+          <Router>
+            <div>
+              <Header onServiceChange={this.onServiceChange}/>
+              {randomPlanet}
+              <button className="toggle-planet btn btn-warning btn-lg"
+                      onClick={this.toggleRandomPlanet}>
+                {this.state.randomPlanetButtonLabel}
+              </button>
+              <ErrorButton/>
 
-            <ItemPage getData={getPeople}
-                      getItemData={getPerson}
-                      getImageUrl={getPersonImage}
-                      renderItem={({name, gender}) => `${name} - { ${gender} }`}>
-              <Record field="gender" label="Gender"/>
-              <Record field="eyeColor" label="Eye Color"/>
-              <Record field="birthYear" label="Birth Year"/>
-            </ItemPage>
+              <Route path="/planets" component={PlanetsPage}/>
+              <Route path="/people" component={PeoplePage}/>
+              <Route path="/spaceships" component={SpaceshipPage}/>
 
-            <ItemPage getData={getAllSpaceships}
-                      getItemData={getSpaceship}
-                      getImageUrl={getSpaceshipImage}
-                      renderItem={({name, model}) => `${name} - { ${model} }`}>
-              <Record field="model" label="Model"/>
-              <Record field="manufactured" label="Manufactured"/>
-              <Record field="passengers" label="Passengers"/>
-            </ItemPage>
-          </div>
+            </div>
+          </Router>
         </SwapiServiceProvider>
       </ErrorBoundry>
     );
