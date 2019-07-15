@@ -5,7 +5,7 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import './app.css';
 import ErrorButton from "../error-button";
-import {ItemPage, NewItemPage, OtherItemPage} from "../pages";
+import {ItemPage, NewItemPage, OtherItemPage, LoginPage, SecretPage} from "../pages";
 import {SwapiServiceProvider} from "../swapi-service-context/swapi-service-context";
 import SwapiService from "../../services/swapi-service";
 import DummySwapiService from "../../services/dummy-swapi-service";
@@ -18,7 +18,12 @@ export default class App extends Component {
   state = {
     showRandomPlanet: true,
     swapiService: new SwapiService(),
-    randomPlanetButtonLabel: 'Hide random planet'
+    randomPlanetButtonLabel: 'Hide random planet',
+    isLoggedIn: false
+  };
+
+  onLogin = () => {
+    this.setState({isLoggedIn: true});
   };
 
   toggleRandomPlanet = () => {
@@ -80,6 +85,8 @@ export default class App extends Component {
         </NewItemPage>);
     };
 
+    const {isLoggedIn} = this.state;
+
     return (
       <ErrorBoundry>
         <SwapiServiceProvider value={this.state.swapiService}>
@@ -122,6 +129,16 @@ export default class App extends Component {
                          </ItemDetails>
                        );
                      }}/>
+
+              <Route path="/secret-page" render={() => (
+                <SecretPage isLoggedIn={isLoggedIn}/>
+              )}/>
+
+              <Route path="/login"
+                     render={() => (
+                       <LoginPage isLoggedIn={isLoggedIn}
+                                  onLogin={this.onLogin}/>
+                     )}/>
 
             </div>
           </Router>
