@@ -5,7 +5,7 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import './app.css';
 import ErrorButton from "../error-button";
-import {ItemPage, NewItemPage} from "../pages";
+import {ItemPage, NewItemPage, OtherItemPage} from "../pages";
 import {SwapiServiceProvider} from "../swapi-service-context/swapi-service-context";
 import SwapiService from "../../services/swapi-service";
 import DummySwapiService from "../../services/dummy-swapi-service";
@@ -63,20 +63,20 @@ export default class App extends Component {
 
     const PeoplePage = () => {
       return (
-        <ItemPage getData={getPeople}
-                  getItemData={getPerson}
-                  getImageUrl={getPersonImage}
-                  renderItem={({name, gender}) => `${name} - { ${gender} }`}>
+        <OtherItemPage getData={getPeople}
+                       getItemData={getPerson}
+                       getImageUrl={getPersonImage}
+                       renderItem={({name, gender}) => `${name} - { ${gender} }`}>
           <Record field="gender" label="Gender"/>
           <Record field="eyeColor" label="Eye Color"/>
           <Record field="birthYear" label="Birth Year"/>
-        </ItemPage>);
+        </OtherItemPage>);
     };
 
     const SpaceshipPage = () => {
       return (
         <NewItemPage getData={getAllSpaceships}
-                  renderItem={({name, model}) => `${name} - { ${model} }`}>
+                     renderItem={({name, model}) => `${name} - { ${model} }`}>
         </NewItemPage>);
     };
 
@@ -91,7 +91,7 @@ export default class App extends Component {
                       onClick={this.toggleRandomPlanet}>
                 {this.state.randomPlanetButtonLabel}
               </button>
-              <ErrorButton />
+              <ErrorButton/>
 
               <Route path="/"
                      render={() => <h2>Welcome to StarDB!</h2>}
@@ -105,7 +105,7 @@ export default class App extends Component {
               <Route path="/people"
                      render={() => <h2>People</h2>}
                      exact/>
-              <Route path="/people" component={PeoplePage}/>
+              <Route path="/people/:id?" component={PeoplePage}/>
 
               <Route path="/spaceships"
                      render={() => <h2>Spaceships</h2>}
@@ -114,7 +114,8 @@ export default class App extends Component {
               <Route path="/spaceships/:id"
                      render={({match}) => {
                        return (
-                         <ItemDetails itemId={match.params.id} getItemData={getSpaceship} getImageUrl={getSpaceshipImage}>
+                         <ItemDetails itemId={match.params.id} getItemData={getSpaceship}
+                                      getImageUrl={getSpaceshipImage}>
                            <Record field="model" label="Model"/>
                            <Record field="manufactured" label="Manufactured"/>
                            <Record field="passengers" label="Passengers"/>
