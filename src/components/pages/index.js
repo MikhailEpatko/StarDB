@@ -1,7 +1,4 @@
 import ItemPage from './item-page';
-import SpaceshipsPage from './spaceships-page';
+import NewItemPage from './new-item-page';
 
-export default {
-  ItemPage,
-  SpaceshipsPage
-};
+export  {ItemPage, NewItemPage};

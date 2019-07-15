@@ -5,13 +5,11 @@ import './item-page.css';
 import ItemList from "../item-list";
 import Row from '../row';
 
-const SpaceshipsPage = ({getData, renderItem, history}) => {
+const NewItemPage = ({getData, renderItem, history}) => {
 
   const itemList = (
     <ItemList getData={getData}
-              onItemSelected={(itemId) => {
-                history.push(`/spaceships/${itemId}`);
-              }}
+              onItemSelected={(id) => history.push(id)}
               renderItem={renderItem}/>
   );
 
@@ -21,4 +19,4 @@ const SpaceshipsPage = ({getData, renderItem, history}) => {
 
 };
 
-export default withRouter(SpaceshipsPage);
+export default withRouter(NewItemPage);

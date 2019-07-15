@@ -5,14 +5,13 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import './app.css';
 import ErrorButton from "../error-button";
-import ItemPage from "../pages";
+import {ItemPage, NewItemPage} from "../pages";
 import {SwapiServiceProvider} from "../swapi-service-context/swapi-service-context";
 import SwapiService from "../../services/swapi-service";
 import DummySwapiService from "../../services/dummy-swapi-service";
 import Record from '../record';
 import ErrorBoundry from "../error-boundry";
 import ItemDetails from "../item-details";
-import SpaceshipsPage from "../pages/spaceships-page";
 
 export default class App extends Component {
 
@@ -74,23 +73,11 @@ export default class App extends Component {
         </ItemPage>);
     };
 
-    // const SpaceshipPage = () => {
-    //   return (
-    //     <ItemPage getData={getAllSpaceships}
-    //               getItemData={getSpaceship}
-    //               getImageUrl={getSpaceshipImage}
-    //               renderItem={({name, model}) => `${name} - { ${model} }`}>
-    //       <Record field="model" label="Model"/>
-    //       <Record field="manufactured" label="Manufactured"/>
-    //       <Record field="passengers" label="Passengers"/>
-    //     </ItemPage>);
-    // };
-
     const SpaceshipPage = () => {
       return (
-        <SpaceshipsPage getData={getAllSpaceships}
+        <NewItemPage getData={getAllSpaceships}
                   renderItem={({name, model}) => `${name} - { ${model} }`}>
-        </SpaceshipsPage>);
+        </NewItemPage>);
     };
 
     return (
@@ -104,26 +91,28 @@ export default class App extends Component {
                       onClick={this.toggleRandomPlanet}>
                 {this.state.randomPlanetButtonLabel}
               </button>
-              <ErrorButton/>
+              <ErrorButton />
 
               <Route path="/"
                      render={() => <h2>Welcome to StarDB!</h2>}
                      exact/>
+
               <Route path="/planets"
                      render={() => <h2>Planets</h2>}
                      exact/>
               <Route path="/planets" component={PlanetsPage}/>
+
               <Route path="/people"
                      render={() => <h2>People</h2>}
                      exact/>
               <Route path="/people" component={PeoplePage}/>
+
               <Route path="/spaceships"
                      render={() => <h2>Spaceships</h2>}
                      exact/>
               <Route path="/spaceships" exact component={SpaceshipPage}/>
               <Route path="/spaceships/:id"
                      render={({match}) => {
-                       console.log(match);
                        return (
                          <ItemDetails itemId={match.params.id} getItemData={getSpaceship} getImageUrl={getSpaceshipImage}>
                            <Record field="model" label="Model"/>
