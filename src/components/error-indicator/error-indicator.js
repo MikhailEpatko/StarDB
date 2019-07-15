@@ -9,8 +9,8 @@ const ErrorIndicator = () => {
       <img src={icon}
            alt="error icon" />
       <span className="boom">BOOM!</span>
-      <span>something went wrong</span>
-      <span>but R2-D2 is fixing it</span>
+      <span>Something went wrong</span>
+      <span>But we already sent R2-D2 to fix it</span>
     </div>
   );
 };

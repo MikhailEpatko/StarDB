@@ -11,6 +11,8 @@ import SwapiService from "../../services/swapi-service";
 import DummySwapiService from "../../services/dummy-swapi-service";
 import Record from '../record';
 import ErrorBoundry from "../error-boundry";
+import ItemDetails from "../item-details";
+import SpaceshipsPage from "../pages/spaceships-page";
 
 export default class App extends Component {
 
@@ -72,16 +74,23 @@ export default class App extends Component {
         </ItemPage>);
     };
 
+    // const SpaceshipPage = () => {
+    //   return (
+    //     <ItemPage getData={getAllSpaceships}
+    //               getItemData={getSpaceship}
+    //               getImageUrl={getSpaceshipImage}
+    //               renderItem={({name, model}) => `${name} - { ${model} }`}>
+    //       <Record field="model" label="Model"/>
+    //       <Record field="manufactured" label="Manufactured"/>
+    //       <Record field="passengers" label="Passengers"/>
+    //     </ItemPage>);
+    // };
+
     const SpaceshipPage = () => {
       return (
-        <ItemPage getData={getAllSpaceships}
-                  getItemData={getSpaceship}
-                  getImageUrl={getSpaceshipImage}
+        <SpaceshipsPage getData={getAllSpaceships}
                   renderItem={({name, model}) => `${name} - { ${model} }`}>
-          <Record field="model" label="Model"/>
-          <Record field="manufactured" label="Manufactured"/>
-          <Record field="passengers" label="Passengers"/>
-        </ItemPage>);
+        </SpaceshipsPage>);
     };
 
     return (
@@ -111,7 +120,18 @@ export default class App extends Component {
               <Route path="/spaceships"
                      render={() => <h2>Spaceships</h2>}
                      exact/>
-              <Route path="/spaceships" component={SpaceshipPage}/>
+              <Route path="/spaceships" exact component={SpaceshipPage}/>
+              <Route path="/spaceships/:id"
+                     render={({match}) => {
+                       console.log(match);
+                       return (
+                         <ItemDetails itemId={match.params.id} getItemData={getSpaceship} getImageUrl={getSpaceshipImage}>
+                           <Record field="model" label="Model"/>
+                           <Record field="manufactured" label="Manufactured"/>
+                           <Record field="passengers" label="Passengers"/>
+                         </ItemDetails>
+                       );
+                     }}/>
 
             </div>
           </Router>
