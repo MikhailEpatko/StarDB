@@ -55,14 +55,17 @@ export default class App extends Component {
 
     const PlanetsPage = () => {
       return (
-        <ItemPage getData={getAllPlanets}
-                  getItemData={getPlanet}
-                  getImageUrl={getPlanetImage}
-                  renderItem={({name, population}) => `${name} { population: ${population} }`}>
-          <Record field="diameter" label="Diameter"/>
-          <Record field="gravity" label="Gravity"/>
-          <Record field="population" label="Population"/>
-        </ItemPage>
+        <div>
+          <h2>Planets</h2>
+          <ItemPage getData={getAllPlanets}
+                    getItemData={getPlanet}
+                    getImageUrl={getPlanetImage}
+                    renderItem={({name, population}) => `${name} { population: ${population} }`}>
+            <Record field="diameter" label="Diameter"/>
+            <Record field="gravity" label="Gravity"/>
+            <Record field="population" label="Population"/>
+          </ItemPage>
+        </div>
       );
     };
 
@@ -83,9 +86,12 @@ export default class App extends Component {
 
     const SpaceshipPage = () => {
       return (
-        <NewItemPage getData={getAllSpaceships}
-                     renderItem={({name, model}) => `${name} - { ${model} }`}>
-        </NewItemPage>);
+        <div>
+          <h2>Spaceships</h2>
+          <NewItemPage getData={getAllSpaceships}
+                       renderItem={({name, model}) => `${name} - { ${model} }`}>
+          </NewItemPage>
+        </div>);
     };
 
     const {isLoggedIn} = this.state;
@@ -108,16 +114,10 @@ export default class App extends Component {
                        render={() => <h2>Welcome to StarDB!</h2>}
                        exact/>
 
-                <Route path="/planets"
-                       render={() => <h2>Planets</h2>}
-                       exact/>
                 <Route path="/planets" component={PlanetsPage}/>
 
                 <Route path="/people/:id?" component={PeoplePage}/>
 
-                <Route path="/spaceships"
-                       render={() => <h2>Spaceships</h2>}
-                       exact/>
                 <Route path="/spaceships" exact component={SpaceshipPage}/>
                 <Route path="/spaceships/:id"
                        render={({match}) => {
