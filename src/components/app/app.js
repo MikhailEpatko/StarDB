@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Switch, Route} from 'react-router-dom';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -68,14 +68,17 @@ export default class App extends Component {
 
     const PeoplePage = () => {
       return (
-        <OtherItemPage getData={getPeople}
-                       getItemData={getPerson}
-                       getImageUrl={getPersonImage}
-                       renderItem={({name, gender}) => `${name} - { ${gender} }`}>
-          <Record field="gender" label="Gender"/>
-          <Record field="eyeColor" label="Eye Color"/>
-          <Record field="birthYear" label="Birth Year"/>
-        </OtherItemPage>);
+        <div>
+          <h2>People</h2>
+          <OtherItemPage getData={getPeople}
+                         getItemData={getPerson}
+                         getImageUrl={getPersonImage}
+                         renderItem={({name, gender}) => `${name} - { ${gender} }`}>
+            <Record field="gender" label="Gender"/>
+            <Record field="eyeColor" label="Eye Color"/>
+            <Record field="birthYear" label="Birth Year"/>
+          </OtherItemPage>
+        </div>);
     };
 
     const SpaceshipPage = () => {
@@ -100,45 +103,46 @@ export default class App extends Component {
               </button>
               <ErrorButton/>
 
-              <Route path="/"
-                     render={() => <h2>Welcome to StarDB!</h2>}
-                     exact/>
+              <Switch>
+                <Route path="/"
+                       render={() => <h2>Welcome to StarDB!</h2>}
+                       exact/>
 
-              <Route path="/planets"
-                     render={() => <h2>Planets</h2>}
-                     exact/>
-              <Route path="/planets" component={PlanetsPage}/>
+                <Route path="/planets"
+                       render={() => <h2>Planets</h2>}
+                       exact/>
+                <Route path="/planets" component={PlanetsPage}/>
 
-              <Route path="/people"
-                     render={() => <h2>People</h2>}
-                     exact/>
-              <Route path="/people/:id?" component={PeoplePage}/>
+                <Route path="/people/:id?" component={PeoplePage}/>
 
-              <Route path="/spaceships"
-                     render={() => <h2>Spaceships</h2>}
-                     exact/>
-              <Route path="/spaceships" exact component={SpaceshipPage}/>
-              <Route path="/spaceships/:id"
-                     render={({match}) => {
-                       return (
-                         <ItemDetails itemId={match.params.id} getItemData={getSpaceship}
-                                      getImageUrl={getSpaceshipImage}>
-                           <Record field="model" label="Model"/>
-                           <Record field="manufactured" label="Manufactured"/>
-                           <Record field="passengers" label="Passengers"/>
-                         </ItemDetails>
-                       );
-                     }}/>
+                <Route path="/spaceships"
+                       render={() => <h2>Spaceships</h2>}
+                       exact/>
+                <Route path="/spaceships" exact component={SpaceshipPage}/>
+                <Route path="/spaceships/:id"
+                       render={({match}) => {
+                         return (
+                           <ItemDetails itemId={match.params.id} getItemData={getSpaceship}
+                                        getImageUrl={getSpaceshipImage}>
+                             <Record field="model" label="Model"/>
+                             <Record field="manufactured" label="Manufactured"/>
+                             <Record field="passengers" label="Passengers"/>
+                           </ItemDetails>
+                         );
+                       }}/>
 
-              <Route path="/secret-page" render={() => (
-                <SecretPage isLoggedIn={isLoggedIn}/>
-              )}/>
+                <Route path="/secret-page" render={() => (
+                  <SecretPage isLoggedIn={isLoggedIn}/>
+                )}/>
 
-              <Route path="/login"
-                     render={() => (
-                       <LoginPage isLoggedIn={isLoggedIn}
-                                  onLogin={this.onLogin}/>
-                     )}/>
+                <Route path="/login"
+                       render={() => (
+                         <LoginPage isLoggedIn={isLoggedIn}
+                                    onLogin={this.onLogin}/>
+                       )}/>
+                <Route render={() => (<h2>Page not found</h2>)}/>
+                {/*<Redirect to="/"/>*/}
+              </Switch>
 
             </div>
           </Router>
