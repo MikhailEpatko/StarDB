@@ -1,6 +1,6 @@
 ## StarDB
 
-Just another educational application on ReactJS. Done.
+Just another application for learning ReactJS. Done.
 
 To start the application execute first:
 
