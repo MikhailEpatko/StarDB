@@ -1,4 +1,6 @@
-### Just another educational application on ReactJS.
+## StarDB
+
+Just another educational application on ReactJS. Done.
 
 To start the application execute first:
 
